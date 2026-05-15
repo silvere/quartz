@@ -1,5 +1,6 @@
 import { QuartzConfig } from "./quartz/cfg"
 import * as Plugin from "./quartz/plugins"
+import { SearchAliases } from "../scripts/quartz-plugins/SearchAliases"
 
 /**
  * Quartz 4 Configuration
@@ -8,16 +9,16 @@ import * as Plugin from "./quartz/plugins"
  */
 const config: QuartzConfig = {
   configuration: {
-    pageTitle: "Quartz 4",
-    pageTitleSuffix: "",
+    pageTitle: "LLM 评测 Wiki",
+    pageTitleSuffix: " — LLMEvaluationWiki",
     enableSPA: true,
     enablePopovers: true,
     analytics: {
       provider: "plausible",
     },
-    locale: "en-US",
-    baseUrl: "quartz.jzhao.xyz",
-    ignorePatterns: ["private", "templates", ".obsidian"],
+    locale: "zh-CN",
+    baseUrl: "wiki.jerryai.cn",
+    ignorePatterns: ["private", "templates", ".obsidian", "raw", "99-Meta"],
     defaultDateType: "modified",
     theme: {
       fontOrigin: "googleFonts",
@@ -72,6 +73,7 @@ const config: QuartzConfig = {
       Plugin.CrawlLinks({ markdownLinkResolution: "shortest" }),
       Plugin.Description(),
       Plugin.Latex({ renderEngine: "katex" }),
+      SearchAliases(),
     ],
     filters: [Plugin.RemoveDrafts()],
     emitters: [
