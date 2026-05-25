@@ -1,5 +1,6 @@
 import { QuartzConfig } from "./quartz/cfg"
 import * as Plugin from "./quartz/plugins"
+import { SearchAliases } from "../scripts/quartz-plugins/SearchAliases"
 
 /**
  * Quartz 4 Configuration
@@ -9,14 +10,14 @@ import * as Plugin from "./quartz/plugins"
 const config: QuartzConfig = {
   configuration: {
     pageTitle: "LLM 评测 Wiki",
-    pageTitleSuffix: " | LLMEvaluationWiki",
+    pageTitleSuffix: " — LLMEvaluationWiki",
     enableSPA: true,
     enablePopovers: true,
     analytics: {
       provider: "plausible",
     },
     locale: "zh-CN",
-    baseUrl: "llm-eval-wiki.pages.dev",
+    baseUrl: "wiki.jerryai.cn",
     ignorePatterns: ["private", "templates", ".obsidian", "raw", "99-Meta/history", "quartz", "node_modules", "scripts"],
     defaultDateType: "modified",
     theme: {
@@ -72,8 +73,9 @@ const config: QuartzConfig = {
       Plugin.CrawlLinks({ markdownLinkResolution: "shortest" }),
       Plugin.Description(),
       Plugin.Latex({ renderEngine: "katex" }),
+      SearchAliases(),
     ],
-    filters: [Plugin.ExplicitPublish()],  // 只发布 publish: true 的页面（我们的 schema）
+    filters: [Plugin.ExplicitPublish()],
     emitters: [
       Plugin.AliasRedirects(),
       Plugin.ComponentResources(),
