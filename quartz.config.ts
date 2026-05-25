@@ -8,16 +8,16 @@ import * as Plugin from "./quartz/plugins"
  */
 const config: QuartzConfig = {
   configuration: {
-    pageTitle: "Quartz 4",
-    pageTitleSuffix: "",
+    pageTitle: "LLM 评测 Wiki",
+    pageTitleSuffix: " | LLMEvaluationWiki",
     enableSPA: true,
     enablePopovers: true,
     analytics: {
       provider: "plausible",
     },
-    locale: "en-US",
-    baseUrl: "quartz.jzhao.xyz",
-    ignorePatterns: ["private", "templates", ".obsidian"],
+    locale: "zh-CN",
+    baseUrl: "llm-eval-wiki.pages.dev",
+    ignorePatterns: ["private", "templates", ".obsidian", "raw", "99-Meta/history", "quartz", "node_modules", "scripts"],
     defaultDateType: "modified",
     theme: {
       fontOrigin: "googleFonts",
@@ -73,7 +73,7 @@ const config: QuartzConfig = {
       Plugin.Description(),
       Plugin.Latex({ renderEngine: "katex" }),
     ],
-    filters: [Plugin.RemoveDrafts()],
+    filters: [Plugin.ExplicitPublish()],  // 只发布 publish: true 的页面（我们的 schema）
     emitters: [
       Plugin.AliasRedirects(),
       Plugin.ComponentResources(),
