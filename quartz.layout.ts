@@ -38,7 +38,29 @@ export const defaultContentPageLayout: PageLayout = {
         { Component: Component.ReaderMode() },
       ],
     }),
-    Component.Explorer(),
+    Component.Explorer({
+      // 给文件夹标签追加条目数：papers → papers (167)
+      // 注意：mapFn 会被序列化（.toString()）后在浏览器再 eval，不能引用闭包外变量
+      mapFn: (node) => {
+        if (node.isFolder && node.slugSegment) {
+          // 迭代统计所有非文件夹后代（避免递归在 .toString() 后失效）
+          const stack = [...node.children]
+          let count = 0
+          while (stack.length) {
+            const n = stack.pop()
+            if (!n) continue
+            if (n.isFolder) {
+              for (const c of n.children) stack.push(c)
+            } else {
+              count++
+            }
+          }
+          if (count > 0) {
+            node.displayName = `${node.displayName} (${count})`
+          }
+        }
+      },
+    }),
   ],
   right: [
     Component.Graph(),
@@ -62,7 +84,29 @@ export const defaultListPageLayout: PageLayout = {
         { Component: Component.Darkmode() },
       ],
     }),
-    Component.Explorer(),
+    Component.Explorer({
+      // 给文件夹标签追加条目数：papers → papers (167)
+      // 注意：mapFn 会被序列化（.toString()）后在浏览器再 eval，不能引用闭包外变量
+      mapFn: (node) => {
+        if (node.isFolder && node.slugSegment) {
+          // 迭代统计所有非文件夹后代（避免递归在 .toString() 后失效）
+          const stack = [...node.children]
+          let count = 0
+          while (stack.length) {
+            const n = stack.pop()
+            if (!n) continue
+            if (n.isFolder) {
+              for (const c of n.children) stack.push(c)
+            } else {
+              count++
+            }
+          }
+          if (count > 0) {
+            node.displayName = `${node.displayName} (${count})`
+          }
+        }
+      },
+    }),
   ],
   right: [],
 }
